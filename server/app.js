@@ -148,8 +148,6 @@ var fs = require("fs"),
         storage: storage
     });
 
-// Export the module to be used(AKA required) in app.js
-module.exports = function (app) {
     // POST request handler for /upload route
     app.post("/upload", upload.single("img-file"), function (req, res) {
         // Use fs to read the uploaded file to verfiy success
@@ -165,7 +163,6 @@ module.exports = function (app) {
             });
         });
     });
-}
 
 // Error handling
     // bottom of the stack below all other path handlers
