@@ -80,10 +80,6 @@ app.get("/api/groceries/:id", function (req, res) {
     var where = {};
     if (req.params.id) {
         where.id = req.params.id
-        // where.name = req.params.name,
-        // where.brand = req.params.brand,
-        // where.upc12 = req.params.upc12
-        // passed via URL params
     }
 
     console.log("where " + where);
