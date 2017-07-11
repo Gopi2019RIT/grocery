@@ -24,6 +24,16 @@
                     ng-click="ctrl.search()">
                 Search Groceries
             </button>
+
+            <!-- <button type="submit" class="btn btn-info form-control" ng-disabled="queryForm.$invalid"
+                    ng-click="ctrl.search()">
+                A-Z
+            </button>
+
+            <button type="submit" class="btn btn-info form-control" ng-disabled="queryForm.$invalid"
+                    ng-click="ctrl.searchz()">
+                Z-A
+            </button>-->
         </div>
     </form>
     <hr>
@@ -33,14 +43,15 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Product Name</th>
+            <th><button ng-click="sortBy('name')"><small>Sort</small></br>Product Name</button><span class="sortorder" ng-show="groc.name === 'name'" ng-class="{reverse: reverse}"></span></th>
+            <!-- <th>Product Name</th> -->
             <th>Brand</th>
             <th>UPC12 Barcode</th>
             <th>Edit</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="groc in ctrl.groceries">
+        <tr ng-repeat="groc in ctrl.groceries | orderBy:groc.name:reverse">
             <td>{{ groc.id }}</td>
             <td>{{ groc.name }}</td>
             <td>{{ groc.brand }}</td>

@@ -43,7 +43,7 @@ app.use(bodyParser.json());
 
 // ROUTE HANDLERS
 
-// ** Search groceries
+// ** Search groceries A-Z
 app.get("/api/groceries", function (req, res) {
     Grocery
         .findAll({
@@ -58,6 +58,35 @@ app.get("/api/groceries", function (req, res) {
             order: [
             ['name', 'ASC']
             // ['name', 'DESC']
+            ]
+        })
+        .then(function (groceries) {
+            res
+                .status(200)
+                .json(groceries);
+        })
+        .catch(function (err) {
+            res
+                .status(500)
+                .json(err);
+        });
+});
+
+// ** Search groceries Z-A
+app.get("/api/groceriez", function (req, res) {
+    Grocery
+        .findAll({
+            where: {
+                $or: [
+                    {brand: {$like: "%" + req.query.searchString + "%"}},
+                    {name: {$like: "%" + req.query.searchString + "%"}}
+                    // passed via non-URL params
+                ],
+            },
+            limit: 20,
+            order: [
+            ['name', 'DESC']
+            // ['name', 'ASC']
             ]
         })
         .then(function (groceries) {

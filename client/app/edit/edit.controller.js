@@ -61,7 +61,7 @@
             vm.showDetails = true;
 
             GrocService
-                .retrieveGrocByID(vm.id)
+                .retrieveGrocByIDAZ(vm.id)
                 .then(function (result) {
                     vm.showDetails = true;
 

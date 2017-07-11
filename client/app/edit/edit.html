@@ -28,6 +28,7 @@
     <hr>
 
     <!-- Groceries table display -->
+    <form name="myForm" novalidate>
     <table class="table table-striped" ng-show="ctrl.showDetails">
         <thead>
         <tr>
@@ -40,7 +41,7 @@
                 </button>
                 
                     <button type="button" class="btn btn-success"
-                            ng-click="ctrl.updateGroc()">
+                            ng-click="ctrl.updateGroc()" ng-disabled="myForm.$invalid">
                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     </button>
                     <button type="button" class="btn btn-danger"
@@ -72,7 +73,7 @@
                 </div>
                 <div ng-show="ctrl.isEditorOn">
                     <div class="input-group">
-                        <input type="text" class="form-control" size="80" ng-model="ctrl.result.brand">
+                        <input type="text" class="form-control" size="80" ng-model="ctrl.result.brand" required>
                         <!-- <div class="input-group-btn">
                             <button type="button" class="btn btn-success"
                                     ng-click="ctrl.updateGroc()">
@@ -101,7 +102,7 @@
                 </div>
                 <div ng-show="ctrl.isEditorOn">
                     <div class="input-group">
-                        <input type="text" class="form-control" size="80" ng-model="ctrl.result.name">
+                        <input type="text" class="form-control" size="80" ng-model="ctrl.result.name" required>
                         <!-- <div class="input-group-btn">
                             <button type="button" class="btn btn-success"
                                     ng-click="ctrl.updateGroc()">
@@ -130,7 +131,7 @@
                 </div>
                 <div ng-show="ctrl.isEditorOn">
                     <div class="input-group">
-                        <input type="text" class="form-control" size="80" ng-model="ctrl.result.upc12">
+                        <input type="text" class="form-control" size="80" ng-model="ctrl.result.upc12" required>
                         <!-- <div class="input-group-btn">
                             <button type="button" class="btn btn-success"
                                     ng-click="ctrl.updateGroc()">
@@ -147,4 +148,5 @@
         </tr>
         </tbody>
     </table>
+    </form>
 </div>

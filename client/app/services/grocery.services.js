@@ -11,7 +11,7 @@
         var service = this;
 
         service.retrieveGrocDB = retrieveGrocDB; // searchDB
-        service.retrieveGrocByID = retrieveGrocByID; // edit
+        service.retrieveGrocByIDAZ = retrieveGrocByIDAZ; // edit
         service.updateGroc = updateGroc;
 
         // REST API groceries
@@ -28,8 +28,8 @@
             });
         }
 
-        // read a grocery via param
-        function retrieveGrocByID(id) {
+        // read a grocery A-Z via param
+        function retrieveGrocByIDAZ(id) {
             return $http({
                 method: 'GET'
                 , url: "api/groceries/" + id // passed via URL params
