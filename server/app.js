@@ -131,6 +131,42 @@ app.put('/api/groceries/:id', function (req, res) {
         })
 });
 
+// IMAGE UPLOAD
+// Load all required modules for uploading files
+var fs = require("fs"),
+    path = require("path"),
+    multer = require("multer"),
+    storage = multer.diskStorage({
+        // Storage configuration for multer - where to save and under what name
+        destination: './uploads_tmp/',
+        filename: function (req, file, cb) {
+            cb(null, file.originalname)
+        }
+    }),
+    upload = multer({
+        // Actual upload function using previously defined configuration
+        storage: storage
+    });
+
+// Export the module to be used(AKA required) in app.js
+module.exports = function (app) {
+    // POST request handler for /upload route
+    app.post("/upload", upload.single("img-file"), function (req, res) {
+        // Use fs to read the uploaded file to verfiy success
+        fs.readFile(req.file.path, function (err, data) {
+            // Error handler for reading file
+            if (err) {
+                console.info("ERR >> " + err);
+                res.status(404).json({size:0});
+            }
+            // Sends a HTTP 202 status code for Accepted to browser and a json containing the image file size to be displayed in the flash message
+            res.status(202).json({
+                size: req.file.size
+            });
+        });
+    });
+}
+
 // Error handling
     // bottom of the stack below all other path handlers
 app.use(function (req, res) {

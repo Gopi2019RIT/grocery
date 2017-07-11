@@ -4,6 +4,7 @@
             "ngMessages",
             "ngAnimate",
             "ui.router",
-            "angularUtils.directives.dirPagination"
+            "angularUtils.directives.dirPagination",
+            "ngFileUpload"
         ]);
 })();
