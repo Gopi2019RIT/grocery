@@ -15,13 +15,18 @@
                    type="text"
                    name="searchString"
                    ng-model="ctrl.searchString"
-                   placeholder="Enter Grocery Name or Brand">
+                   placeholder="Enter Grocery Name or Brand"
+                   required
+                   ng-pattern="/^[^#%&*:<>?/{|}]+$/">
+            </br>
+            <small class="text-muted">Please do not enter invalid characters like symbols.</small>
         </div>
+        </br>
 
         <!-- Search buttons -->
         <div class="form-group">
             <button type="submit" class="btn btn-info form-control" ng-disabled="queryForm.$invalid"
-                    ng-click="ctrl.search()">
+                    ng-click="ctrl.search()" ng-disabled="queryForm.$invalid">
                 Search Groceries
             </button>
 
@@ -43,7 +48,7 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th><button ng-click="sortBy('name')"><small>Sort</small></br>Product Name</button><span class="sortorder" ng-show="groc.name === 'name'" ng-class="{reverse: reverse}"></span></th>
+            <th><button ng-click="sortBy('name')"><small>Sort</small></br>Product Name</button><span class="sortorder" ng-show="propertyName === 'name'" ng-class="{reverse: reverse}"></span></th>
             <!-- <th>Product Name</th> -->
             <th>Brand</th>
             <th>UPC12 Barcode</th>
@@ -51,7 +56,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="groc in ctrl.groceries | orderBy:groc.name:reverse">
+        <tr ng-repeat="groc in ctrl.groceries | orderBy:propertyName:reverse">
             <td>{{ groc.id }}</td>
             <td>{{ groc.name }}</td>
             <td>{{ groc.brand }}</td>

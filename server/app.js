@@ -72,35 +72,6 @@ app.get("/api/groceries", function (req, res) {
         });
 });
 
-// ** Search groceries Z-A
-app.get("/api/groceriez", function (req, res) {
-    Grocery
-        .findAll({
-            where: {
-                $or: [
-                    {brand: {$like: "%" + req.query.searchString + "%"}},
-                    {name: {$like: "%" + req.query.searchString + "%"}}
-                    // passed via non-URL params
-                ],
-            },
-            limit: 20,
-            order: [
-            ['name', 'DESC']
-            // ['name', 'ASC']
-            ]
-        })
-        .then(function (groceries) {
-            res
-                .status(200)
-                .json(groceries);
-        })
-        .catch(function (err) {
-            res
-                .status(500)
-                .json(err);
-        });
-});
-
 // ** searchDB via ID
 // DeptService, SearchDBCtrl
 // Search specific grocery by id
