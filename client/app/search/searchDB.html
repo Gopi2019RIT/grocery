@@ -36,16 +36,15 @@
     <hr>
 
     <!-- Grocery table display -->
-    <span class="label">Ordered By: {{orderByField}}, Reverse Sort: {{reverseSort}}</span><br><br>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>ID</th>
-                <th><button>
+                <th>
                     <a href="#" ng-click="orderByField='name'; reverseSort = !reverseSort">
-                        <small>Sort</small></br>
-          Product Name <span ng-show="orderByField == 'name'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-          </a></button>
+                        <button><small>Sort</small></br>
+          Product Name <span ng-show="orderByField == 'name'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span></button>
+          </a>
 
                     <th>Brand</th>
                     <th>UPC12 Barcode</th>
