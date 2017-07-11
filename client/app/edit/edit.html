@@ -32,14 +32,59 @@
         <thead>
         <tr>
             <th>Attributes</th>
-            <th>Value</th>
+            <th> 
+                <div class="input-group-btn">
+                <button type="button" class="btn btn-primary"
+                            ng-click="ctrl.toggleEditor()">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </button>
+                
+                    <button type="button" class="btn btn-success"
+                            ng-click="ctrl.updateGroc()">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-danger"
+                            ng-click="ctrl.toggleEditor()">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td>Brand</td>
+            <td>ID</td>
             <td>
                 {{ ctrl.result.id }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>Brand</td>
+            <td>
+                <div ng-hide="ctrl.isEditorOn">
+                    {{ ctrl.result.brand }}
+                    <!-- <button type="button" class="btn btn-link btn-sm"
+                            ng-click="ctrl.toggleEditor()">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> -->
+                    </button>
+
+                </div>
+                <div ng-show="ctrl.isEditorOn">
+                    <div class="input-group">
+                        <input type="text" class="form-control" size="80" ng-model="ctrl.result.brand">
+                        <!-- <div class="input-group-btn">
+                            <button type="button" class="btn btn-success"
+                                    ng-click="ctrl.updateGroc()">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-danger"
+                                    ng-click="ctrl.toggleEditor()">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </div> -->
+                    </div>
+                </div>
             </td>
         </tr>
 
@@ -48,25 +93,25 @@
             <td>
                 <div ng-hide="ctrl.isEditorOn">
                     {{ ctrl.result.name }}
-                    <button type="button" class="btn btn-link btn-sm"
+                    <!-- <button type="button" class="btn btn-link btn-sm"
                             ng-click="ctrl.toggleEditor()">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                    </button>
+                    </button> -->
 
                 </div>
                 <div ng-show="ctrl.isEditorOn">
                     <div class="input-group">
-                        <input type="text" class="form-control" size="1" ng-model="ctrl.result.name">
-                        <div class="input-group-btn">
+                        <input type="text" class="form-control" size="80" ng-model="ctrl.result.name">
+                        <!-- <div class="input-group-btn">
                             <button type="button" class="btn btn-success"
-                                    ng-click="ctrl.updateGrocName()">
+                                    ng-click="ctrl.updateGroc()">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
                             <button type="button" class="btn btn-danger"
                                     ng-click="ctrl.toggleEditor()">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                             </button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </td>
@@ -76,26 +121,26 @@
             <td>UPC No.</td>
             <td>
                 <div ng-hide="ctrl.isEditorOn">
-                    {{ ctrl.result.name }}
-                    <button type="button" class="btn btn-link btn-sm"
+                    {{ ctrl.result.upc12 }}
+                    <!-- <button type="button" class="btn btn-link btn-sm"
                             ng-click="ctrl.toggleEditor()">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                    </button>
+                    </button> -->
 
                 </div>
                 <div ng-show="ctrl.isEditorOn">
                     <div class="input-group">
-                        <input type="text" class="form-control" size="1" ng-model="ctrl.result.name">
-                        <div class="input-group-btn">
+                        <input type="text" class="form-control" size="80" ng-model="ctrl.result.upc12">
+                        <!-- <div class="input-group-btn">
                             <button type="button" class="btn btn-success"
-                                    ng-click="ctrl.updateGrocName()">
+                                    ng-click="ctrl.updateGroc()">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
                             <button type="button" class="btn btn-danger"
                                     ng-click="ctrl.toggleEditor()">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                             </button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </td>

@@ -29,8 +29,9 @@
 
         // Click goEdit() params link
         function goEdit(clickedGrocNo) {
-            console.log("editing");
+            console.log("editing start");
             $state.go("editWithParam", { grocNo: clickedGrocNo });
+            console.log("editing end");
         };
 
         // Click search() button

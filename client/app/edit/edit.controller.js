@@ -10,12 +10,16 @@
         var vm = this;
 
         vm.id = "";
+        vm.name = "";
+        vm.upc12 = "";
+        vm.brand = "";
+
         vm.result = {};
 
         vm.initDetails = initDetails;
         vm.search = search;
         vm.toggleEditor = toggleEditor;
-        vm.updateGrocName = updateGrocName;
+        vm.updateGroc = updateGroc;
 
         // Initialize grocery data view
         initDetails();
@@ -36,11 +40,11 @@
             vm.search();
         }
 
-        // Click updateGrocName() button
-        function updateGrocName() {
+        // Click updateGroc() button
+        function updateGroc() {
             console.log("-- show.controller.js > save()");
             GrocService
-                .updateGroc(vm.id, vm.result.name)
+                .updateGroc(vm.id, vm.result.name, vm.result.brand, vm.result.upc12)
                 .then(function (result) {
                     console.log("-- show.controller.js > save() > results: \n" + JSON.stringify(result.data));
                 })
@@ -68,6 +72,8 @@
 
                     vm.result.id = result.data.id;
                     vm.result.name = result.data.name;
+                    vm.result.brand = result.data.brand;
+                    vm.result.upc12 = result.data.upc12;
                 })
                 .catch(function (err) {
                     console.log("--  show.controller.js > search() > error: \n" + JSON.stringify(err));

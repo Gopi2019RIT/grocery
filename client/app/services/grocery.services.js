@@ -12,7 +12,7 @@
 
         service.retrieveGrocDB = retrieveGrocDB; // searchDB
         service.retrieveGrocByID = retrieveGrocByID; // edit
-        service.updateGroc = updateGroc; // edit
+        service.updateGroc = updateGroc;
 
         // REST API groceries
 
@@ -36,14 +36,16 @@
             });
         }
         
-        // edit grocery
-        function updateGroc(id, name) {
+        // edit updateGrocName
+        function updateGroc(id, name, brand, upc12) {
             return $http({
                 method: 'PUT' // via route parameters & HTTP header body
                 , url: 'api/groceries/' + id // passed via URL params
                 , data: {
                     id: id,
-                    name: name
+                    name: name,
+                    brand: brand,
+                    upc12: upc12
                     // passed via body
                 }
             });

@@ -44,8 +44,6 @@ app.use(bodyParser.json());
 // ROUTE HANDLERS
 
 // ** Search groceries
-// DeptService, SearchDBCtrl
-// Retrieve department information from database via search findAll
 app.get("/api/groceries", function (req, res) {
     Grocery
         .findAll({
@@ -57,7 +55,10 @@ app.get("/api/groceries", function (req, res) {
                 ],
             },
             limit: 20,
-            
+            order: [
+            ['name', 'ASC']
+            // ['name', 'DESC']
+            ]
         })
         .then(function (groceries) {
             res
@@ -79,6 +80,9 @@ app.get("/api/groceries/:id", function (req, res) {
     var where = {};
     if (req.params.id) {
         where.id = req.params.id
+        // where.name = req.params.name,
+        // where.brand = req.params.brand,
+        // where.upc12 = req.params.upc12
         // passed via URL params
     }
 
@@ -89,13 +93,6 @@ app.get("/api/groceries/:id", function (req, res) {
             // use findOne as id is the primary key, cannot use findById as it doesn't support eager loading
             where: where,
             limit: 20
-
-            // , include: [{
-            //     model: Manager
-            //     , order: [["to_date", "DESC"]]
-            //     , limit: 1
-            //     , include: [Employee]
-            // }]
         })
         .then(function (groceries) {
             console.log("-- GET /api/groceries/:id findOne then() result \n " + JSON.stringify(groceries));
@@ -118,10 +115,14 @@ app.put('/api/groceries/:id', function (req, res) {
     var where = {};
     where.id = req.params.id; // passed via URL params
     var new_name = req.body.name;  // passed via body
+    var new_brand = req.body.brand;
+    var new_upc12 = req.body.upc12;
 
     Grocery
         .update({
             name: new_name,
+            brand: new_brand,
+            upc12: new_upc12
         },{
             where: where,
         })
