@@ -34,7 +34,7 @@
         }
 
         // Pass groceries params
-        if ($stateParams.id) {
+        if ($stateParams.grocNo) {
             console.log("passing info" + $stateParams.grocNo)
             vm.id = $stateParams.grocNo;
             vm.search();
