@@ -17,9 +17,9 @@ const MYSQL_PASSWORD = 'root';
 // Express instance
 var app = express();
 
-// MySQL connection
+// *** MySQL connection
 var sequelize = new Sequelize(
-    'employees',
+    'shop',
     MYSQL_USERNAME,
     MYSQL_PASSWORD,
     {
@@ -34,14 +34,8 @@ var sequelize = new Sequelize(
     }
 );
 
-// Models
-var Department = require('./models/department')(sequelize, Sequelize);
-var Employee = require('./models/employee')(sequelize, Sequelize);
-var Manager = require('./models/deptmanager')(sequelize, Sequelize);
-
-// Associations
-Department.hasMany(Manager, {foreignKey: 'dept_no'});
-Manager.hasOne(Employee, {foreignKey: 'emp_no'}); // manager is also an employee
+// *** Models
+var Grocery = require('./models/grocery')(sequelize, Sequelize);
 
 // Middlewares
 app.use(express.static(CLIENT_FOLDER)); // serve files from client folder and look for index.html
@@ -52,21 +46,23 @@ app.use(bodyParser.json());
 // ** Search groceries
 // DeptService, SearchDBCtrl
 // Retrieve department information from database via search findAll
-app.get("/api/departments", function (req, res) {
-    Department
+app.get("/api/groceries", function (req, res) {
+    Grocery
         .findAll({
             where: {
                 $or: [
-                    {dept_name: {$like: "%" + req.query.searchString + "%"}},
-                    {dept_no: {$like: "%" + req.query.searchString + "%"}}
+                    {brand: {$like: "%" + req.query.searchString + "%"}},
+                    {name: {$like: "%" + req.query.searchString + "%"}}
                     // passed via non-URL params
-                ]
-            }
+                ],
+            },
+            limit: 20,
+            
         })
-        .then(function (departments) {
+        .then(function (groceries) {
             res
                 .status(200)
-                .json(departments);
+                .json(groceries);
         })
         .catch(function (err) {
             res
@@ -77,34 +73,36 @@ app.get("/api/departments", function (req, res) {
 
 // ** searchDB via ID
 // DeptService, SearchDBCtrl
-// Search specific department by dept_no
-    // define before /api/departments/managers if not managers route would be treated as dept_no
-app.get("/api/departments/:dept_no", function (req, res) {
+// Search specific grocery by id
+    // define before /api/groceries/managers if not managers route would be treated as id
+app.get("/api/groceries/:id", function (req, res) {
     var where = {};
-    if (req.params.dept_no) {
-        where.dept_no = req.params.dept_no
+    if (req.params.id) {
+        where.id = req.params.id
         // passed via URL params
     }
 
     console.log("where " + where);
 
-    Department
+    Grocery
         .findOne({
-            // use findOne as dept_no is the primary key, cannot use findById as it doesn't support eager loading
-            where: where
-            , include: [{
-                model: Manager
-                , order: [["to_date", "DESC"]]
-                , limit: 1
-                , include: [Employee]
-            }]
+            // use findOne as id is the primary key, cannot use findById as it doesn't support eager loading
+            where: where,
+            limit: 20
+
+            // , include: [{
+            //     model: Manager
+            //     , order: [["to_date", "DESC"]]
+            //     , limit: 1
+            //     , include: [Employee]
+            // }]
         })
-        .then(function (departments) {
-            console.log("-- GET /api/departments/:dept_no findOne then() result \n " + JSON.stringify(departments));
-            res.json(departments);
+        .then(function (groceries) {
+            console.log("-- GET /api/groceries/:id findOne then() result \n " + JSON.stringify(groceries));
+            res.json(groceries);
         })
         .catch(function (err) {
-            console.log("-- GET /api/departments/:dept_no findOne catch() \n " + JSON.stringify(departments));
+            console.log("-- GET /api/groceries/:id findOne catch() \n " + JSON.stringify(groceries));
             res
                 .status(500)
                 .json({error: true});
@@ -114,16 +112,16 @@ app.get("/api/departments/:dept_no", function (req, res) {
 
 // ** edit groceries
 // DeptService, EditCtrl
-// Edit department info
-app.put('/api/departments/:dept_no', function (req, res) {
+// Edit groceries info
+app.put('/api/groceries/:id', function (req, res) {
 
     var where = {};
-    where.dept_no = req.params.dept_no; // passed via URL params
-    var new_dept_name = req.body.dept_name;  // passed via body
+    where.id = req.params.id; // passed via URL params
+    var new_name = req.body.name;  // passed via body
 
-    Department
+    Grocery
         .update({
-            dept_name: new_dept_name,
+            name: new_name,
         },{
             where: where,
         })

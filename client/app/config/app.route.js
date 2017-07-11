@@ -26,7 +26,7 @@
             // controllerAs: "ctrl"
         })
         .state("editWithParam", {
-            url: "/edit/:deptNo",
+            url: "/edit/:id",
             templateUrl: "app/edit/edit.html",
             // controller: EditCtrl
         });

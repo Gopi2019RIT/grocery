@@ -6,13 +6,13 @@
     </div>
     <br/>
 
-    <!-- Department search input -->
+    <!-- Groceries search input -->
     <form name="queryForm" novalidate class="form-inline">
         <div class="form-group">
-            <label for="dept_no">Department number:</label>
-            <input id="dept_no" class="form-control" type="text" name="dept_no"
-                   placeholder="Enter dept number"
-                   ng-model="ctrl.dept_no"
+            <label for="id">Grocery ID:</label>
+            <input id="id" class="form-control" type="text" name="id"
+                   placeholder="Enter Grocery ID"
+                   ng-model="ctrl.id"
                    ng-change="ctrl.initDetails()"
                    required>
         </div>
@@ -27,7 +27,7 @@
 
     <hr>
 
-    <!-- Department table display -->
+    <!-- Groceries table display -->
     <table class="table table-striped" ng-show="ctrl.showDetails">
         <thead>
         <tr>
@@ -37,17 +37,17 @@
         </thead>
         <tbody>
         <tr>
-            <td>Brand (dept no.)</td>
+            <td>Brand</td>
             <td>
-                {{ ctrl.result.dept_no }}
+                {{ ctrl.result.id }}
             </td>
         </tr>
 
         <tr>
-            <td>Product Name (dept name)</td>
+            <td>Product Name</td>
             <td>
                 <div ng-hide="ctrl.isEditorOn">
-                    {{ ctrl.result.dept_name }}
+                    {{ ctrl.result.name }}
                     <button type="button" class="btn btn-link btn-sm"
                             ng-click="ctrl.toggleEditor()">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -56,10 +56,10 @@
                 </div>
                 <div ng-show="ctrl.isEditorOn">
                     <div class="input-group">
-                        <input type="text" class="form-control" size="1" ng-model="ctrl.result.dept_name">
+                        <input type="text" class="form-control" size="1" ng-model="ctrl.result.name">
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-success"
-                                    ng-click="ctrl.updateDeptName()">
+                                    ng-click="ctrl.updateGrocName()">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
                             <button type="button" class="btn btn-danger"
@@ -76,7 +76,7 @@
             <td>UPC No.</td>
             <td>
                 <div ng-hide="ctrl.isEditorOn">
-                    {{ ctrl.result.dept_name }}
+                    {{ ctrl.result.name }}
                     <button type="button" class="btn btn-link btn-sm"
                             ng-click="ctrl.toggleEditor()">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -85,10 +85,10 @@
                 </div>
                 <div ng-show="ctrl.isEditorOn">
                     <div class="input-group">
-                        <input type="text" class="form-control" size="1" ng-model="ctrl.result.dept_name">
+                        <input type="text" class="form-control" size="1" ng-model="ctrl.result.name">
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-success"
-                                    ng-click="ctrl.updateDeptName()">
+                                    ng-click="ctrl.updateGrocName()">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
                             <button type="button" class="btn btn-danger"
@@ -103,15 +103,3 @@
         </tbody>
     </table>
 </div>
-
-<span ng-show="ctrl.showManager">
-                 <!-- Handles display of departments that have not been assigned any manager -->
-                {{ dept.managers[0] ? dept.managers[0].emp_no : " "}}
-            </span>
-
-<span ng-show="ctrl.showManager">
-                 <!-- Handles display of departments that have not been assigned any manager -->
-                {{ dept.managers[0]
-                ? (dept.managers[0].employee.first_name + " " + dept.managers[0].employee.last_name)
-                : " "}}
-            </span>
