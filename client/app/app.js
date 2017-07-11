@@ -3,6 +3,7 @@
         .module("DMS", [
             "ngMessages",
             "ngAnimate",
-            "ui.router"
+            "ui.router",
+            "angularUtils.directives.dirPagination"
         ]);
 })();
