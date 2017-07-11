@@ -49,35 +49,7 @@ app.use(bodyParser.json());
 
 // ROUTE HANDLERS
 
-// DeptService, RegCtrl
-// Create department via transaction where department record is created only when manager record is created 
-app.post("/api/departments", function (req, res) {
-    console.log('\nData Submitted');
-    console.log('Dept No: ' + req.body.dept.id);
-    console.log('Dept Name: ' + req.body.dept.name);
-
-    Department
-        .create(
-            {
-                dept_no: req.body.dept.id,
-                dept_name: req.body.dept.name
-                // post to req.body
-                // dept_no is the SQL column name, req.body.dept.id is the req response from client
-            }
-        )
-        .then(function (results) {
-            res
-                .status(200)
-                .json(results);
-        })
-        .catch(function (err) {
-            console.log("outer error: " + JSON.stringify(err));
-            res
-                .status(500)
-                .json(err);
-        });
-    });
-
+// ** Search groceries
 // DeptService, SearchDBCtrl
 // Retrieve department information from database via search findAll
 app.get("/api/departments", function (req, res) {
@@ -103,41 +75,7 @@ app.get("/api/departments", function (req, res) {
         });
 });
 
-// DeptService, SearchDBCtrl
-// Retrieve department & manager records that match against dept name or dept no.
-app.get("/api/departments/managers", function (req, res) {
-    Department
-        .findAll({
-            where: {
-                $or: [
-                    {dept_name: {$like: "%" + req.query.searchString + "%"}},
-                    {dept_no: {$like: "%" + req.query.searchString + "%"}}
-                    // passed via non-URL params
-                    // match any of the condition
-                ]
-            }
-            // include joins the tables
-            , include: [{
-                model: Manager
-                , order: [["to_date", "DESC"]]
-                , limit: 1
-                // We include the Employee model to get the manager's name
-                , include: [Employee]
-            }]
-        })
-        .then(function (departments) {
-            res
-                .status(200)
-                .json(departments);
-        })
-        // this .catch() handles erroneous findAll operation
-        .catch(function (err) {
-            res
-                .status(500)
-                .json(err);
-        });
-});
-
+// ** searchDB via ID
 // DeptService, SearchDBCtrl
 // Search specific department by dept_no
     // define before /api/departments/managers if not managers route would be treated as dept_no
@@ -174,6 +112,7 @@ app.get("/api/departments/:dept_no", function (req, res) {
 
 });
 
+// ** edit groceries
 // DeptService, EditCtrl
 // Edit department info
 app.put('/api/departments/:dept_no', function (req, res) {
@@ -195,95 +134,6 @@ app.put('/api/departments/:dept_no', function (req, res) {
             res.status(500).json({ success: false });
             console.log(err);
         })
-});
-
-// DeptService, EditCtrl
-// Delete manager of specific department via param
-app.delete("/api/departments/:dept_no/managers/:emp_no", function (req, res) {
-
-    var where = {};
-    where.dept_no = req.params.dept_no; // via URL params
-    where.emp_no = req.params.emp_no;   // via URL params
-
-    Manager
-    .destroy({
-        where: where
-    })
-    .then(function(result) {
-        console.log("records delete: " + result);
-        if (result == 1) {
-            res.json({ success: true });
-        } else {
-            res.json({ success: false});
-        }
-    })
-    .catch(function(err) {
-        res.status(500).json({ success: false });
-        console.log(err);
-    })
-});
-
-// DeptService
-// Retrieve department data (static)
-app.get("/api/static/departments", function (req, res) {
-
-    var departments = [
-        {
-            deptNo: 1001,
-            deptName: 'Admin'
-        }
-        , {
-            deptNo: 1002,
-            deptName: 'Finance'
-        }
-        , {
-            deptNo: 1003,
-            deptName: 'Sales'
-        }
-        , {
-            deptNo: 1004,
-            deptName: 'HR'
-        }
-        , {
-            deptNo: 1005,
-            deptName: 'Staff'
-        }
-        , {
-            deptNo: 1006,
-            deptName: 'Customer Care'
-        }
-        , {
-            deptNo: 1007,
-            deptName: 'Support'
-        }
-    ];
-
-    res.status(200).json(departments);    // return as json object
-});
-
-// EmpService
-// Retrieve employee data (non-managers)
-app.get("/api/employees", function (req, res) {
-    sequelize
-        .query("SELECT emp_no, first_name, last_name " +
-            "FROM employees e " +
-            "WHERE NOT EXISTS " +
-            "(SELECT * " +
-            "FROM dept_manager dm " +
-            "WHERE dm.emp_no = e.emp_no )" +
-            "LIMIT 100; " // SQL statement
-        )
-        .spread(function (employees) {
-            // .spread() instead of .then to separate metadata
-            res
-                .status(200)
-                .json(employees);
-        })
-        .catch(function (err) {
-            res
-                .status(500)
-                .json(err);
-        });
 });
 
 // Error handling
