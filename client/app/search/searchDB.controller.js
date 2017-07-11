@@ -14,6 +14,9 @@
         vm.search = search;
         vm.goEdit = goEdit;
 
+        vm.orderByField = 'name';
+        vm.reverseSort = false;
+
         // Initialize data
         init();
         function init() {
