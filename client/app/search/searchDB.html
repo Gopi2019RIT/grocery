@@ -1,7 +1,7 @@
 <div class="container" ng-controller="SearchDBCtrl as ctrl">
 
     <div class="page-header">
-        <h1>Department Management System
+        <h1>Groceries Management System
             <small>SearchDB</small>
         </h1>
     </div>
@@ -36,31 +36,18 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>Department No</th>
-            <th>Department name</th>
-            <th ng-show="ctrl.showManager">Department Manager Id</th>
-            <th ng-show="ctrl.showManager">Department Manager Name</th>
-
+            <th>Product Name (dept no.)</th>
+            <th>Brand (dept name)</th>
+            <th>UPC12 Barcode</th>
+            <th>Edit</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="dept in ctrl.departments">
             <td><a ng-click="ctrl.goEdit(dept.dept_no)">{{dept.dept_no }}</a></td>
             <td>{{ dept.dept_name }}</td>
-            <td>
-            <span ng-show="ctrl.showManager">
-                 <!-- Handles display of departments that have not been assigned any manager -->
-                {{ dept.managers[0] ? dept.managers[0].emp_no : " "}}
-            </span>
-            </td>
-            <td>
-            <span ng-show="ctrl.showManager">
-                 <!-- Handles display of departments that have not been assigned any manager -->
-                {{ dept.managers[0]
-                ? (dept.managers[0].employee.first_name + " " + dept.managers[0].employee.last_name)
-                : " "}}
-            </span>
-            </td>
+            <td>UPC12</td>
+            <td><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
         </tr>
         </tbody>
     </table>

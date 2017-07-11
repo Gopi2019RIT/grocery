@@ -7,14 +7,14 @@
 
     function uiRouteConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-        .state("register", {
-            url: "/register",
-            templateUrl: "app/registration/register.html",
-        })
-        .state("search", {
-            url: "/search",
-            templateUrl: "app/search/search.html",
-        })
+        // .state("register", {
+        //     url: "/register",
+        //     templateUrl: "app/registration/register.html",
+        // })
+        // .state("search", {
+        //     url: "/search",
+        //     templateUrl: "app/search/search.html",
+        // })
         .state("searchDB", {
             url: "/searchDB",
             templateUrl: "app/search/searchDB.html",
