@@ -5,7 +5,7 @@ var bodyParser = require("body-parser"); // parse body of request object
 var Sequelize = require("sequelize");
 
 // Constants
-const NODE_PORT = process.env.NODE_PORT || 3000; // define server port
+const NODE_PORT = process.env.PORT || 3000; // define server port
 
 const CLIENT_FOLDER = path.join(__dirname, '/../client');
 const MSG_FOLDER = path.join(CLIENT_FOLDER, '/assets/messages'); // define paths
