@@ -11,19 +11,20 @@ const CLIENT_FOLDER = path.join(__dirname, '/../client');
 const MSG_FOLDER = path.join(CLIENT_FOLDER, '/assets/messages'); // define paths
 
 // MySQL configuration
-const MYSQL_USERNAME = 'root';
-const MYSQL_PASSWORD = 'root';
+const MYSQL_USERNAME = process.env.DB_USERNAME;
+const MYSQL_PASSWORD = process.env.DB_PASSWORD;
+const MYSQL_DATABASE = process.env.DB_DATABASE;
 
 // Express instance
 var app = express();
 
 // *** MySQL connection
 var sequelize = new Sequelize(
-    'shop',
+    MYSQL_DATABASE,
     MYSQL_USERNAME,
     MYSQL_PASSWORD,
     {
-        host: 'localhost',         // default port    : 3306
+        host: process.env.DB_HOST,         // default port    : 3306
         logging: console.log,
         dialect: 'mysql',
         pool: {
@@ -75,7 +76,6 @@ app.get("/api/groceries", function (req, res) {
 // ** searchDB via ID
 // DeptService, SearchDBCtrl
 // Search specific grocery by id
-    // define before /api/groceries/managers if not managers route would be treated as id
 app.get("/api/groceries/:id", function (req, res) {
     var where = {};
     if (req.params.id) {
